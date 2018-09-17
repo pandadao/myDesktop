@@ -131,7 +131,8 @@ class RDCServerGUI(QDialog):
         # Setting style
         QApplication.setStyle(QStyleFactory.create('cleanlooks'))
         QApplication.setPalette(QApplication.style().standardPalette())
-        self.setStyleSheet(open(os.path.dirname(__file__) + '/styleSheet.qss', 'r').read( ))
+        #self.setStyleSheet(open(os.path.dirname(__file__) + '/styleSheet.qss', 'r').read( ))
+        self.setStyleSheet(open(os.path.abspath(os.path.dirname(__file__)) + '/styleSheet.qss', 'r').read( ))
 
         # Label
         self.hostLab  = QLabel('')

@@ -48,7 +48,7 @@ class RDCFactory(clientProtocol.RDCFactory):
 
     def readyConnection(self, client):
         self.display.readyDisplay(client)
-        
+
     def clientConnectionFailed(self, connector, reason):
         log.msg("Client connection failed!. (%s)" % reason.getErrorMessage( ))
         reactor.stop( )
@@ -84,7 +84,7 @@ class Display(QWidget):
 
     def readyDisplay(self, protocol):
         self.clientProtocol = protocol
-     
+
     def paintEvent(self, event):
         """
         paint frame buffer in widget
@@ -95,7 +95,7 @@ class Display(QWidget):
             painter.drawPixmap(0, 0, self._pixelmap)
             #painter.drawPixmap(0, 0, self._pixelmap.scaled(self.size( ), Qt.IgnoreAspectRatio))
         self.update( )
-    
+
     def updateFramebuffer(self, pixelmap):
         self._remoteframebuffer = pixelmap
         #self._pixelmap.loadFromData(pixelmap)
@@ -105,13 +105,13 @@ class Display(QWidget):
     def keyPressEvent(self, event):
         key  = event.key( )
         print(key)
-        flag = event.type( ) 
+        flag = event.type( )
         if self.clientProtocol is None: return
         self.clientProtocol.keyEvent(key, flag)
         self.update( )
 
     def mousePressEvent(self, event):
-        x, y   = (event.pos( ).x( ), event.pos( ).y( )) 
+        x, y   = (event.pos( ).x( ), event.pos( ).y( ))
         button = event.button( )
         print(button)
         flag   = event.type( )
@@ -120,19 +120,19 @@ class Display(QWidget):
         print(self.clientProtocol.pointerEvent)
 
     def mouseReleaseEvent(self, event):
-        x, y   = (event.pos( ).x( ), event.pos( ).y( )) 
+        x, y   = (event.pos( ).x( ), event.pos( ).y( ))
         button = event.button( )
         flag   = event.type( )
         if self.clientProtocol is None: return #self.clientProtocol = self.parent.client.clientProto
         self.clientProtocol.pointerEvent(x, y, button, flag)
 
     def mouseMoveEvent(self,  event):
-        x, y   = (event.pos( ).x( ), event.pos( ).y( )) 
+        x, y   = (event.pos( ).x( ), event.pos( ).y( ))
         button = event.button( )
         flag   = event.type( )
         if self.clientProtocol is None: return #self.clientProtocol = self.parent.client.clientProto
         self.clientProtocol.pointerEvent(x, y, button, flag)
-        
+
     def resizeEvent(self, event):
         """
         the remote framebuffer's size is according the client viewer size
@@ -176,7 +176,7 @@ class myDesktopViewer(QMainWindow):
     def connectionStart(self):
         self.client = RDCFactory(display=self.display, password='1234')
         reactor.connectTCP('192.168.1.103', 5000, self.client)
-        
+
     def connectionStop(self):
         reactor.stop( )
 
